@@ -241,12 +241,12 @@ class Tau:
         
     def set_xp_mode(self, mode=0x02):
         function = ptc.SET_DIGITAL_OUTPUT_MODE
-        argument = struct.pack(">h", 0x0300 & mode)
+        argument = struct.pack(">h", 0x0300 | mode)
 
         self._send_packet(function, argument)
         res = self._read_packet(function)
 
-        if int.from_bytes(res[7], byteorder='big', signed=False) == 0x0300 & mode:
+        if int.from_bytes(res[7], byteorder='big', signed=False) == 0x0300 | mode:
             return True
         else:
             return False
@@ -266,12 +266,12 @@ class Tau:
         else:
             mode = 0x01
 
-        argument = struct.pack(">h", 0x0600 & mode)
+        argument = struct.pack(">h", 0x0600 | mode)
 
         self._send_packet(function, argument)
         res = self._read_packet(function)
 
-        if int.from_bytes(res[7], byteorder='big', signed=False) == 0x0600 & mode:
+        if int.from_bytes(res[7], byteorder='big', signed=False) == 0x0600 | mode:
             return True
         else:
             return False
